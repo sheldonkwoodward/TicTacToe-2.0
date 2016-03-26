@@ -11,31 +11,30 @@ void MainBoard::showBoard()
 		for (int i = 0; i < 3; i++) {
 			if (i > 0) cout << "  " << (char)186;
 			else cout << "   ";
-
-			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
-			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
-			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
+			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
+			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
 			cout << "   " << miniBoards[Y][i].getVal(0, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(1, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 0) << " ";
-			sw::ConsoleColors::setConsoleColor(boardColor, "none");
+			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
 		cout << endl;
 		for (int y = 0; y < 2; y++) {
 			cout << "     ";
 			for (int x = 0; x < 3; x++) {
 
-				if (miniBoards[Y][x].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
-				else if (miniBoards[Y][x].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
-				else if (boardPosXY[0] == x && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+				if (miniBoards[Y][x].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
+				else if (miniBoards[Y][x].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
+				else if (boardPosXY[0] == x && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 				
 				cout << (char)196 << (char)196 << (char)196;
 				cout << (char)197;
 				cout << (char)196 << (char)196 << (char)196;
 				cout << (char)197;
 				cout << (char)196 << (char)196 << (char)196;
-				sw::ConsoleColors::setConsoleColor(boardColor, "none");
+				sw::Console::Colors::setConsoleColor(boardColor, "none");
 				if (x < 2) cout << "  " << (char)186 << "  ";
 			}
 			cout << endl;
@@ -44,14 +43,14 @@ void MainBoard::showBoard()
 					if (i > 0) cout << "  " << (char)186;
 					else cout << "   ";
 					
-					if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
-					else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
-					else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+					if (miniBoards[Y][i].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
+					else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
+					else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 					
 					cout << "   " << miniBoards[Y][i].getVal(0, 1) << " " << (char)179;
 					cout << " " << miniBoards[Y][i].getVal(1, 1) << " " << (char)179;
 					cout << " " << miniBoards[Y][i].getVal(2, 1) << " ";
-					sw::ConsoleColors::setConsoleColor(boardColor, "none");
+					sw::Console::Colors::setConsoleColor(boardColor, "none");
 				}
 				cout << endl;
 			}
@@ -60,14 +59,14 @@ void MainBoard::showBoard()
 			if (i > 0) cout << "  " << (char)186;
 			else cout << "   ";
 			
-			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
-			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
-			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
+			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
+			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 			
 			cout << "   " << miniBoards[Y][i].getVal(0, 2) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(1, 2) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 2) << " ";
-			sw::ConsoleColors::setConsoleColor(boardColor, "none");
+			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
 
 		if (Y < 2) {
