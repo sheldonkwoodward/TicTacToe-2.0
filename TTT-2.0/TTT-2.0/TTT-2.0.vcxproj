@@ -149,12 +149,14 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="ComputerPlayer.cpp" />
+    <ClCompile Include="SWLib.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainBoard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="ComputerPlayer.h" />
+    <ClInclude Include="SWLib.h" />
     <ClInclude Include="MainBoard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
