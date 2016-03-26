@@ -38,17 +38,36 @@ int main()
 
 void playerTurn(char OX, MainBoard &mainBoard)
 {
-	int subX = -1, subY = -1;
+	int guess, subX, subY;
+	bool inputFailed;
 
-	///mainBoard.tellBoardPos();
+	do {
+		//reset inputFailed
+		inputFailed = false;
 
-	//sub sections
-	int retry = false;
+		//get guess
+		sw::Console::Cursor::clearLine();
+		cout << "Enter your guess: ";
+		guess = sw::Input::integer(1, 9);
+		guess--;
+
+		//convert to coordinate
+		subX = guess % 3;
+		subY = guess / 3;
+
+		//check for overlap
+		if (mainBoard.checkForVal(subX, subY)) inputFailed = true;
+
+		//reset line if failed
+		if (inputFailed) sw::Console::Cursor::backLine();
+	} while (inputFailed);
+
+	/*int retry = false;
 	do {
 		if (retry) {
 			sw::Console::Cursor::resetPos();
 			mainBoard.showBoard();
-			///mainBoard.tellBoardPos();
+			mainBoard.tellBoardPos();
 			sw::Console::Cursor::clearLine();
 			cout << "That spot is already taken" << endl;
 		}
@@ -76,11 +95,11 @@ void playerTurn(char OX, MainBoard &mainBoard)
 			}
 		}
 
-		//update sub vals
+		update sub vals
 		subX -= 1;
 		subY -= 1;
 		retry = true;
-	} while (mainBoard.checkForVal(subX, subY) == true);
+	} while (mainBoard.checkForVal(subX, subY) == true);*/
 
 	//set value
 	mainBoard.setVal(OX, mainBoard.getBoardX(), mainBoard.getBoardY(), subX, subY);
