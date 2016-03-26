@@ -15,6 +15,8 @@ public:
 		boardPosXY[1] = 1;
 	}
 
+	void setGuessOptions();
+	void removeGuessOptions();
 	void showBoard();
 	void setVal(char val, int x1, int y1, int x2, int y2);
 	int getBoardX();

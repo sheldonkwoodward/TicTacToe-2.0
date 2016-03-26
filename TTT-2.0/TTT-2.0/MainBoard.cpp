@@ -1,7 +1,29 @@
 #include "MainBoard.h"
 
+void MainBoard::setGuessOptions()
+{
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) == ' ')
+				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal((char)(y * 3 + x + 49), x, y);
+		}
+	}
+}
+
+void MainBoard::removeGuessOptions()
+{
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) > 48 && miniBoards[boardPosXY[0]][boardPosXY[1]].getVal(x, y) < 58)
+				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal(' ', x, y);
+		}
+	}
+}
+
 void MainBoard::showBoard()
 {
+	setGuessOptions();
+
 	string boardColor = "lightGray", selectedColor = "green";
 	string XWinColor = "darkGray", OWinColor = "darkGray";
 
