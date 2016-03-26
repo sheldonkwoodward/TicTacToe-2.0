@@ -35,16 +35,56 @@ void sw::Console::Cursor::resetPos()
 {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
 }
+COORD sw::Console::Cursor::getPos()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+	//get current cursor position
+	COORD cursor;
+	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+		cursor.X = csbi.dwCursorPosition.X;
+		cursor.Y = csbi.dwCursorPosition.Y;
+	}
+
+	return cursor;
+}
 void sw::Console::Cursor::setPos(COORD coord)
 {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 void sw::Console::Cursor::clearLine()
 {
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	cout << "\r";
 	for (int i = 0; i < 30; i++) cout << ' ';
 	cout << "\r";
+}
+void sw::Console::Cursor::backLine()
+{
+	//get current cursor position
+	COORD cursor = getPos();
+
+	//go back one line
+	if (cursor.Y > 0) cursor.Y--;
+
+	//set cursor position
+	setPos(cursor);
+}
+void sw::Console::Cursor::backLine(int numLines)
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+	//get current cursor position
+	COORD cursor;
+	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+		cursor.X = csbi.dwCursorPosition.X;
+		cursor.Y = csbi.dwCursorPosition.Y;
+	}
+
+	//go back specified number of lines
+	if (cursor.Y >= numLines) cursor.Y -= numLines;
+	
+	//set cursor position
+	setPos(cursor);
 }
 void sw::Console::Cursor::clearBelow()
 {
@@ -68,3 +108,59 @@ void sw::Console::Cursor::clearBelow()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int sw::Input::integer()
+{
+	COORD startPos = sw::Console::Cursor::getPos();
+	string input = "";
+	bool failed = false;
+
+	//get input
+	getline(cin, input);
+
+	if (input.size() > 9 && input[0] != '-') failed = true;
+	else if (input.size() > 10 && input[0] == '-') failed = true;
+	else if (input.size() == 0) failed = true;
+	else {
+		if (input[0] != '-') {
+			for (int i = 0; i < input.size(); i++) {
+				if (input[i] < 48 || input[i]>57) failed = true;
+			}
+		}
+		else {
+			for (int i = 0; i < input.size(); i++) {
+				if (input[i] < 48 || input[i]>57) if (i != 0) failed = true;
+			}
+		}
+	}
+
+	//failed input
+	if (failed) {
+		//reset input
+		sw::Console::Cursor::setPos(startPos);
+		string clear(input.size(), ' ');
+		cout << clear;
+		sw::Console::Cursor::setPos(startPos);
+
+		//get new input
+		return sw::Input::integer();
+	}
+	else return stoi(input);
+}
+int sw::Input::integer(int min, int max)
+{
+	COORD startPos = sw::Console::Cursor::getPos();
+
+	int input = sw::Input::integer();
+	string sInput = to_string(input);
+
+	if (input < min || input > max) {
+		sw::Console::Cursor::setPos(startPos);
+		string clear(sInput.size(), ' ');
+		cout << clear;
+		sw::Console::Cursor::setPos(startPos);
+
+		return sw::Input::integer(min, max);
+	}
+	else return input;
+}
