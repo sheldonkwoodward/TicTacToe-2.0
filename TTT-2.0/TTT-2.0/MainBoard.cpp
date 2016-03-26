@@ -2,25 +2,40 @@
 
 void MainBoard::showBoard()
 {
+	string boardColor = "lightGray", selectedColor = "green";
+	string XWinColor = "darkGray", OWinColor = "darkGray";
+
 	cout << endl << "                  " << (char)186 << "               " << (char)186 << endl;
 	for (int Y = 0; Y < 3; Y++) {
 
 		for (int i = 0; i < 3; i++) {
 			if (i > 0) cout << "  " << (char)186;
 			else cout << "   ";
+
+			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
+			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
+			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+
 			cout << "   " << miniBoards[Y][i].getVal(0, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(1, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 0) << " ";
+			sw::ConsoleColors::setConsoleColor(boardColor, "none");
 		}
 		cout << endl;
 		for (int y = 0; y < 2; y++) {
 			cout << "     ";
 			for (int x = 0; x < 3; x++) {
+
+				if (miniBoards[Y][x].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
+				else if (miniBoards[Y][x].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
+				else if (boardPosXY[0] == x && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+				
 				cout << (char)196 << (char)196 << (char)196;
 				cout << (char)197;
 				cout << (char)196 << (char)196 << (char)196;
 				cout << (char)197;
 				cout << (char)196 << (char)196 << (char)196;
+				sw::ConsoleColors::setConsoleColor(boardColor, "none");
 				if (x < 2) cout << "  " << (char)186 << "  ";
 			}
 			cout << endl;
@@ -28,9 +43,15 @@ void MainBoard::showBoard()
 				for (int i = 0; i < 3; i++) {
 					if (i > 0) cout << "  " << (char)186;
 					else cout << "   ";
+					
+					if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
+					else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
+					else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+					
 					cout << "   " << miniBoards[Y][i].getVal(0, 1) << " " << (char)179;
 					cout << " " << miniBoards[Y][i].getVal(1, 1) << " " << (char)179;
 					cout << " " << miniBoards[Y][i].getVal(2, 1) << " ";
+					sw::ConsoleColors::setConsoleColor(boardColor, "none");
 				}
 				cout << endl;
 			}
@@ -38,9 +59,15 @@ void MainBoard::showBoard()
 		for (int i = 0; i < 3; i++) {
 			if (i > 0) cout << "  " << (char)186;
 			else cout << "   ";
+			
+			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::ConsoleColors::setConsoleColor(XWinColor, "none");
+			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::ConsoleColors::setConsoleColor(OWinColor, "none");
+			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::ConsoleColors::setConsoleColor(selectedColor, "none");
+			
 			cout << "   " << miniBoards[Y][i].getVal(0, 2) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(1, 2) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 2) << " ";
+			sw::ConsoleColors::setConsoleColor(boardColor, "none");
 		}
 
 		if (Y < 2) {
@@ -58,48 +85,6 @@ void MainBoard::showBoard()
 	}
 	cout << endl << "                  " << (char)186 << "               " << (char)186 << endl;
 	cout << endl;
-
-
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-	//cout << "   " << miniBoards[0][0].getVal(0, 0) << " " << (char)179 << " " << miniBoards[0][0].getVal(1, 0) << " " << (char)179 << " " << miniBoards[0][0].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[0][1].getVal(0, 0) << " " << (char)179 << " " << miniBoards[0][1].getVal(1, 0) << " " << (char)179 << " " << miniBoards[0][1].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[0][2].getVal(0, 0) << " " << (char)179 << " " << miniBoards[0][2].getVal(1, 0) << " " << (char)179 << " " << miniBoards[0][2].getVal(2, 0) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[0][0].getVal(0, 1) << " " << (char)179 << " " << miniBoards[0][0].getVal(1, 1) << " " << (char)179 << " " << miniBoards[0][0].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[0][1].getVal(0, 1) << " " << (char)179 << " " << miniBoards[0][1].getVal(1, 1) << " " << (char)179 << " " << miniBoards[0][1].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[0][2].getVal(0, 1) << " " << (char)179 << " " << miniBoards[0][2].getVal(1, 1) << " " << (char)179 << " " << miniBoards[0][2].getVal(2, 1) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[0][0].getVal(0, 2) << " " << (char)179 << " " << miniBoards[0][0].getVal(1, 2) << " " << (char)179 << " " << miniBoards[0][0].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[0][1].getVal(0, 2) << " " << (char)179 << " " << miniBoards[0][1].getVal(1, 2) << " " << (char)179 << " " << miniBoards[0][1].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[0][2].getVal(0, 2) << " " << (char)179 << " " << miniBoards[0][2].getVal(1, 2) << " " << (char)179 << " " << miniBoards[0][2].getVal(2, 2) << "   " << endl;
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-	//
-	//cout << (char)205;
-	//for (int i = 0; i < 15; i++) cout << (char)205;
-	//cout << (char)206;
-	//for (int i = 0; i < 17; i++) cout << (char)205;
-	//cout << (char)206;
-	//for (int i = 0; i < 15; i++) cout << (char)205;
-	//cout << (char)205 << endl;
-
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-	//cout << "   " << miniBoards[1][0].getVal(0, 0) << " " << (char)179 << " " << miniBoards[1][0].getVal(1, 0) << " " << (char)179 << " " << miniBoards[1][0].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[1][1].getVal(0, 0) << " " << (char)179 << " " << miniBoards[1][1].getVal(1, 0) << " " << (char)179 << " " << miniBoards[1][1].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[1][2].getVal(0, 0) << " " << (char)179 << " " << miniBoards[1][2].getVal(1, 0) << " " << (char)179 << " " << miniBoards[1][2].getVal(2, 0) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[1][0].getVal(0, 1) << " " << (char)179 << " " << miniBoards[1][0].getVal(1, 1) << " " << (char)179 << " " << miniBoards[1][0].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[1][1].getVal(0, 1) << " " << (char)179 << " " << miniBoards[1][1].getVal(1, 1) << " " << (char)179 << " " << miniBoards[1][1].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[1][2].getVal(0, 1) << " " << (char)179 << " " << miniBoards[1][2].getVal(1, 1) << " " << (char)179 << " " << miniBoards[1][2].getVal(2, 1) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[1][0].getVal(0, 2) << " " << (char)179 << " " << miniBoards[1][0].getVal(1, 2) << " " << (char)179 << " " << miniBoards[1][0].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[1][1].getVal(0, 2) << " " << (char)179 << " " << miniBoards[1][1].getVal(1, 2) << " " << (char)179 << " " << miniBoards[1][1].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[1][2].getVal(0, 2) << " " << (char)179 << " " << miniBoards[1][2].getVal(1, 2) << " " << (char)179 << " " << miniBoards[1][2].getVal(2, 2) << "   " << endl;
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-	//
-	//cout << (char)205;
-	//for (int i = 0; i < 15; i++) cout << (char)205;
-	//cout << (char)206;
-	//for (int i = 0; i < 17; i++) cout << (char)205;
-	//cout << (char)206;
-	//for (int i = 0; i < 15; i++) cout << (char)205;
-	//cout << (char)205 << endl;
-
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-	//cout << "   " << miniBoards[2][0].getVal(0, 0) << " " << (char)179 << " " << miniBoards[2][0].getVal(1, 0) << " " << (char)179 << " " << miniBoards[2][0].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[2][1].getVal(0, 0) << " " << (char)179 << " " << miniBoards[2][1].getVal(1, 0) << " " << (char)179 << " " << miniBoards[2][1].getVal(2, 0) << "    " << (char)186 << "    " << miniBoards[2][2].getVal(0, 0) << " " << (char)179 << " " << miniBoards[2][2].getVal(1, 0) << " " << (char)179 << " " << miniBoards[2][2].getVal(2, 0) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[2][0].getVal(0, 1) << " " << (char)179 << " " << miniBoards[2][0].getVal(1, 1) << " " << (char)179 << " " << miniBoards[2][0].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[2][1].getVal(0, 1) << " " << (char)179 << " " << miniBoards[2][1].getVal(1, 1) << " " << (char)179 << " " << miniBoards[2][1].getVal(2, 1) << "    " << (char)186 << "    " << miniBoards[2][2].getVal(0, 1) << " " << (char)179 << " " << miniBoards[2][2].getVal(1, 1) << " " << (char)179 << " " << miniBoards[2][2].getVal(2, 1) << "   " << endl;
-	//cout << "  " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "   " << (char)186 << "   " << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << (char)197 << (char)196 << (char)196 << (char)196 << "  " << endl;
-	//cout << "   " << miniBoards[2][0].getVal(0, 2) << " " << (char)179 << " " << miniBoards[2][0].getVal(1, 2) << " " << (char)179 << " " << miniBoards[2][0].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[2][1].getVal(0, 2) << " " << (char)179 << " " << miniBoards[2][1].getVal(1, 2) << " " << (char)179 << " " << miniBoards[2][1].getVal(2, 2) << "    " << (char)186 << "    " << miniBoards[2][2].getVal(0, 2) << " " << (char)179 << " " << miniBoards[2][2].getVal(1, 2) << " " << (char)179 << " " << miniBoards[2][2].getVal(2, 2) << "   " << endl;
-	//cout << "                " << (char)186 << "                 " << (char)186 << "                " << endl;
-
 }
 
 void MainBoard::setVal(char val, int x1, int y1, int x2, int y2)
@@ -160,4 +145,9 @@ char MainBoard::checkBigWin()
 	if (miniBoards[0][2].checkLittleWin() == miniBoards[1][1].checkLittleWin() && miniBoards[1][1].checkLittleWin() == miniBoards[2][0].checkLittleWin()) return miniBoards[0][2].checkLittleWin();
 
 	return ' ';
+}
+
+char MainBoard::checkLittleWin(int x, int y)
+{
+	return miniBoards[y][x].checkLittleWin();
 }
