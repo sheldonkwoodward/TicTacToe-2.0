@@ -5,6 +5,7 @@
 
 #include <SFML/Network.hpp>
 #include <iostream>
+#include <Windows.h>
 #include "MainBoard.h"
 #include "ComputerPlayer.h"
 using namespace std;
@@ -39,15 +40,15 @@ void playerTurn(char OX, MainBoard &mainBoard)
 {
 	int subX = -1, subY = -1;
 
-	mainBoard.tellBoardPos();
+	///mainBoard.tellBoardPos();
 
 	//sub sections
 	int retry = false;
 	do {
 		if (retry) {
-			system("cls");
+			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
 			mainBoard.showBoard();
-			mainBoard.tellBoardPos();
+			///mainBoard.tellBoardPos();
 			cout << "That spot is already taken" << endl;
 		}
 
@@ -82,6 +83,6 @@ void playerTurn(char OX, MainBoard &mainBoard)
 	mainBoard.setVal(OX, mainBoard.getBoardX(), mainBoard.getBoardY(), subX, subY);
 
 	//clear screen and show updated board
-	system("cls");
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
 	mainBoard.showBoard();
 }

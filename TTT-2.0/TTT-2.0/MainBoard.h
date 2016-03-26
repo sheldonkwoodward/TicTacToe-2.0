@@ -1,9 +1,8 @@
 #pragma once
 #include <iostream>
 #include "Board.h"
+#include "ConsoleColors.h"
 using namespace std;
-
-
 
 class MainBoard {
 private:
@@ -23,4 +22,5 @@ public:
 	bool checkForVal(int x, int y);
 	void tellBoardPos();
 	char checkBigWin();
+	char checkLittleWin(int x, int y);
 };
