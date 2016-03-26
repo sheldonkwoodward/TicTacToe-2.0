@@ -14,7 +14,7 @@ void MainBoard::removeGuessOptions()
 {
 	for (int y = 0; y < 3; y++) {
 		for (int x = 0; x < 3; x++) {
-			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) > 48 && miniBoards[boardPosXY[0]][boardPosXY[1]].getVal(x, y) < 58)
+			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'X' && miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'O')
 				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal(' ', x, y);
 		}
 	}

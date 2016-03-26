@@ -43,6 +43,7 @@ void playerTurn(char OX, MainBoard &mainBoard)
 
 	do {
 		//reset inputFailed
+		mainBoard.removeGuessOptions();
 		inputFailed = false;
 
 		//get guess
@@ -56,7 +57,6 @@ void playerTurn(char OX, MainBoard &mainBoard)
 		subY = guess / 3;
 
 		//check for overlap
-		mainBoard.removeGuessOptions();
 		if (mainBoard.checkForVal(subX, subY)) inputFailed = true;
 
 		//reset line if failed
