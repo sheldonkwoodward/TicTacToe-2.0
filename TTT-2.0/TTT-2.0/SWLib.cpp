@@ -39,8 +39,32 @@ void sw::Console::Cursor::setPos(COORD coord)
 {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
+void sw::Console::Cursor::clearLine()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	cout << "\r";
+	for (int i = 0; i < 30; i++) cout << ' ';
+	cout << "\r";
+}
 void sw::Console::Cursor::clearBelow()
 {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+	//save cursor starting point
+	COORD cursor;
+	if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
+		cursor.X = csbi.dwCursorPosition.X;
+		cursor.Y = csbi.dwCursorPosition.Y;
+	}
+
+	//clear below
+	for (int i = 0; i < csbi.srWindow.Bottom - csbi.srWindow.Top - cursor.Y; i++) {
+		for (int c = 0; c < csbi.srWindow.Right - csbi.srWindow.Left; c++) cout << ' ';
+		cout << endl;
+	}
+
+	//reset cursor position
+	setPos(cursor);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

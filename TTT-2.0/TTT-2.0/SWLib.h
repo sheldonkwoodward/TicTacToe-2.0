@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <iostream>
 #include <string>
 using namespace std;
 
@@ -16,6 +17,7 @@ namespace sw {
 		public:
 			static void resetPos();
 			static void setPos(COORD coord);
+			static void clearLine();
 			static void clearBelow();
 		};
 	};

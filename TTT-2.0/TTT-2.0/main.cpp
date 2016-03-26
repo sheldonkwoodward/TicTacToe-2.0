@@ -46,13 +46,16 @@ void playerTurn(char OX, MainBoard &mainBoard)
 	int retry = false;
 	do {
 		if (retry) {
-			SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
+			sw::Console::Cursor::resetPos();
 			mainBoard.showBoard();
 			///mainBoard.tellBoardPos();
+			sw::Console::Cursor::clearLine();
 			cout << "That spot is already taken" << endl;
 		}
-
-		cout << "Pick a sub section" << endl << "x: ";
+		sw::Console::Cursor::clearLine();
+		cout << "Pick a sub section" << endl;
+		sw::Console::Cursor::clearBelow();
+		cout << "x: ";
 		while (subX != 1 && subX != 2 && subX != 3) {
 			cin >> subX;
 			while (cin.fail()) {
@@ -83,6 +86,6 @@ void playerTurn(char OX, MainBoard &mainBoard)
 	mainBoard.setVal(OX, mainBoard.getBoardX(), mainBoard.getBoardY(), subX, subY);
 
 	//clear screen and show updated board
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
+	sw::Console::Cursor::resetPos();
 	mainBoard.showBoard();
 }
