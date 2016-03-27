@@ -54,8 +54,11 @@ void sw::Console::Cursor::setPos(COORD coord)
 }
 void sw::Console::Cursor::clearLine()
 {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+
 	cout << "\r";
-	for (int i = 0; i < 30; i++) cout << ' ';
+	for (int c = 0; c < 8; c++) cout << "          ";
+	///for (int i = 0; i < 2; i++) cout << "                                                  ";
 	cout << "\r";
 }
 void sw::Console::Cursor::backLine()

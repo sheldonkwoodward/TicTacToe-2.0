@@ -22,7 +22,7 @@ void MainBoard::removeGuessOptions()
 
 void MainBoard::showBoard()
 {
-	setGuessOptions();
+	if (!chooseSpace) setGuessOptions();
 
 	string boardColor = "lightGray", selectedColor = "green";
 	string XWinColor = "darkGray", OWinColor = "darkGray";
@@ -37,7 +37,8 @@ void MainBoard::showBoard()
 			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
-			cout << "   " << miniBoards[Y][i].getVal(0, 0) << " " << (char)179;
+			cout << "   ";
+			cout << miniBoards[Y][i].getVal(0, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(1, 0) << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 0) << " ";
 			sw::Console::Colors::setConsoleColor(boardColor, "none");
@@ -106,6 +107,8 @@ void MainBoard::showBoard()
 	}
 	cout << endl << "                  " << (char)186 << "               " << (char)186 << endl;
 	cout << endl;
+
+	removeGuessOptions();
 }
 
 void MainBoard::setVal(char val, int x1, int y1, int x2, int y2)
@@ -113,6 +116,16 @@ void MainBoard::setVal(char val, int x1, int y1, int x2, int y2)
 	miniBoards[y1][x1].setVal(val, x2, y2);
 	boardPosXY[0] = x2;
 	boardPosXY[1] = y2;
+
+	if (checkLittleWin(boardPosXY[0], boardPosXY[1]) != ' ') chooseSpace = true;
+}
+
+void MainBoard::setBoardXY(int x, int y)
+{
+	boardPosXY[0] = x;
+	boardPosXY[1] = y;
+
+	if (checkLittleWin(boardPosXY[0], boardPosXY[1]) != ' ') chooseSpace = true;
 }
 
 int MainBoard::getBoardX()
@@ -123,6 +136,16 @@ int MainBoard::getBoardX()
 int MainBoard::getBoardY()
 {
 	return boardPosXY[1];
+}
+
+bool MainBoard::getChooseSpace()
+{
+	return chooseSpace;
+}
+
+void MainBoard::setChooseSpace(bool cs)
+{
+	chooseSpace = cs;
 }
 
 bool MainBoard::checkForVal(int x, int y)

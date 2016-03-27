@@ -8,19 +8,24 @@ class MainBoard {
 private:
 	Board miniBoards[3][3];
 	int boardPosXY[2];
+	bool chooseSpace;
 public:
 	MainBoard()
 	{
 		boardPosXY[0] = 1;
 		boardPosXY[1] = 1;
+		chooseSpace = false;
 	}
 
 	void setGuessOptions();
 	void removeGuessOptions();
 	void showBoard();
 	void setVal(char val, int x1, int y1, int x2, int y2);
+	void setBoardXY(int x, int y);
 	int getBoardX();
 	int getBoardY();
+	bool getChooseSpace();
+	void setChooseSpace(bool cs);
 	bool checkForVal(int x, int y);
 	void tellBoardPos();
 	char checkBigWin();

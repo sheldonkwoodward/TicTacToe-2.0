@@ -18,9 +18,6 @@ int main()
 	ComputerPlayer com;
 	bool humanTurn = true;
 
-	//show initial board
-	mainBoard.showBoard();
-
 	//turns
 	while (mainBoard.checkBigWin() == ' ') {
 		if (humanTurn == true) {
@@ -38,13 +35,37 @@ int main()
 
 void playerTurn(char OX, MainBoard &mainBoard)
 {
+	int space, bigX, bigY;
 	int guess, subX, subY;
 	bool inputFailed;
 
+	//clear screen and show updated board
+	sw::Console::Cursor::resetPos();
+	mainBoard.showBoard();
+
 	do {
 		//reset inputFailed
-		mainBoard.removeGuessOptions();
 		inputFailed = false;
+
+		if (mainBoard.getChooseSpace()) {
+			do {
+				sw::Console::Cursor::clearLine();
+				cout << "What space would you like to guess in: ";
+				space = sw::Input::integer(1, 9);
+				space--;
+
+				//convert to coordinate
+				bigX = space % 3;
+				bigY = space / 3;
+
+				mainBoard.setChooseSpace(false);
+				mainBoard.setBoardXY(bigX, bigY);
+
+				sw::Console::Cursor::resetPos();
+				mainBoard.showBoard();
+			} while (mainBoard.getChooseSpace());
+		}
+
 
 		//get guess
 		sw::Console::Cursor::clearLine();
@@ -65,8 +86,4 @@ void playerTurn(char OX, MainBoard &mainBoard)
 
 	//set value
 	mainBoard.setVal(OX, mainBoard.getBoardX(), mainBoard.getBoardY(), subX, subY);
-
-	//clear screen and show updated board
-	sw::Console::Cursor::resetPos();
-	mainBoard.showBoard();
 }
