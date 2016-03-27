@@ -10,22 +10,24 @@ private:
 	int boardPosXY[2];
 	bool chooseSpace;
 public:
-	MainBoard()
-	{
-		boardPosXY[0] = 1;
-		boardPosXY[1] = 1;
-		chooseSpace = false;
-	}
+	//constructor
+	MainBoard();
 
-	void setGuessOptions();
-	void removeGuessOptions();
-	void showBoard();
-	void setVal(char val, int x1, int y1, int x2, int y2);
+	//set and get functions
 	void setBoardXY(int x, int y);
 	int getBoardX();
 	int getBoardY();
-	bool getChooseSpace();
 	void setChooseSpace(bool cs);
+	bool getChooseSpace();
+
+	//show board functions
+	void showBoard();
+	void setGuessOptions();
+	void removeGuessOptions();
+	void showMiniBoardVal(int X, int Y, int x, int y);
+
+	//functions
+	void setVal(char val, int x1, int y1, int x2, int y2);
 	bool checkForVal(int x, int y);
 	void tellBoardPos();
 	char checkBigWin();

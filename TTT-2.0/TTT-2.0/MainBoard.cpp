@@ -1,25 +1,39 @@
 #include "MainBoard.h"
 
-void MainBoard::setGuessOptions()
+//constructor
+MainBoard::MainBoard()
 {
-	for (int y = 0; y < 3; y++) {
-		for (int x = 0; x < 3; x++) {
-			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) == ' ')
-				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal((char)(y * 3 + x + 49), x, y);
-		}
-	}
+	boardPosXY[0] = 1;
+	boardPosXY[1] = 1;
+	chooseSpace = false;
 }
 
-void MainBoard::removeGuessOptions()
+//set and get functions
+void MainBoard::setBoardXY(int x, int y)
 {
-	for (int y = 0; y < 3; y++) {
-		for (int x = 0; x < 3; x++) {
-			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'X' && miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'O')
-				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal(' ', x, y);
-		}
-	}
+	boardPosXY[0] = x;
+	boardPosXY[1] = y;
+
+	if (checkLittleWin(boardPosXY[0], boardPosXY[1]) != ' ') chooseSpace = true;
+}
+int MainBoard::getBoardX()
+{
+	return boardPosXY[0];
+}
+int MainBoard::getBoardY()
+{
+	return boardPosXY[1];
+}
+void MainBoard::setChooseSpace(bool cs)
+{
+	chooseSpace = cs;
+}
+bool MainBoard::getChooseSpace()
+{
+	return chooseSpace;
 }
 
+//show board functions
 void MainBoard::showBoard()
 {
 	if (!chooseSpace) setGuessOptions();
@@ -37,9 +51,10 @@ void MainBoard::showBoard()
 			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
-			cout << "   ";
-			cout << miniBoards[Y][i].getVal(0, 0) << " " << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(1, 0) << " " << (char)179;
+			cout << "   " << miniBoards[Y][i].getVal(0, 0);
+			cout << " " << (char)179;
+			cout << " " << miniBoards[Y][i].getVal(1, 0) << " ";
+			cout << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 0) << " ";
 			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
@@ -51,7 +66,7 @@ void MainBoard::showBoard()
 				if (miniBoards[Y][x].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
 				else if (miniBoards[Y][x].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 				else if (boardPosXY[0] == x && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
-				
+
 				cout << (char)196 << (char)196 << (char)196;
 				cout << (char)197;
 				cout << (char)196 << (char)196 << (char)196;
@@ -65,13 +80,15 @@ void MainBoard::showBoard()
 				for (int i = 0; i < 3; i++) {
 					if (i > 0) cout << "  " << (char)186;
 					else cout << "   ";
-					
+
 					if (miniBoards[Y][i].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
 					else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 					else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
-					
-					cout << "   " << miniBoards[Y][i].getVal(0, 1) << " " << (char)179;
-					cout << " " << miniBoards[Y][i].getVal(1, 1) << " " << (char)179;
+
+					cout << "   " << miniBoards[Y][i].getVal(0, 1);
+					cout << " " << (char)179;
+					cout << " " << miniBoards[Y][i].getVal(1, 1);
+					cout << " " << (char)179;
 					cout << " " << miniBoards[Y][i].getVal(2, 1) << " ";
 					sw::Console::Colors::setConsoleColor(boardColor, "none");
 				}
@@ -81,13 +98,15 @@ void MainBoard::showBoard()
 		for (int i = 0; i < 3; i++) {
 			if (i > 0) cout << "  " << (char)186;
 			else cout << "   ";
-			
+
 			if (miniBoards[Y][i].checkLittleWin() == 'X') sw::Console::Colors::setConsoleColor(XWinColor, "none");
 			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
-			
-			cout << "   " << miniBoards[Y][i].getVal(0, 2) << " " << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(1, 2) << " " << (char)179;
+
+			cout << "   " << miniBoards[Y][i].getVal(0, 2);
+			cout << " " << (char)179;
+			cout << " " << miniBoards[Y][i].getVal(1, 2);
+			cout << " " << (char)179;
 			cout << " " << miniBoards[Y][i].getVal(2, 2) << " ";
 			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
@@ -110,7 +129,30 @@ void MainBoard::showBoard()
 
 	removeGuessOptions();
 }
+void MainBoard::setGuessOptions()
+{
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) == ' ')
+				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal((char)(y * 3 + x + 49), x, y);
+		}
+	}
+}
+void MainBoard::removeGuessOptions()
+{
+	for (int y = 0; y < 3; y++) {
+		for (int x = 0; x < 3; x++) {
+			if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'X' && miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) != 'O')
+				miniBoards[boardPosXY[1]][boardPosXY[0]].setVal(' ', x, y);
+		}
+	}
+}
+void MainBoard::showMiniBoardVal(int X, int Y, int x, int y)
+{
 
+}
+
+//functions
 void MainBoard::setVal(char val, int x1, int y1, int x2, int y2)
 {
 	miniBoards[y1][x1].setVal(val, x2, y2);
@@ -119,35 +161,6 @@ void MainBoard::setVal(char val, int x1, int y1, int x2, int y2)
 
 	if (checkLittleWin(boardPosXY[0], boardPosXY[1]) != ' ') chooseSpace = true;
 }
-
-void MainBoard::setBoardXY(int x, int y)
-{
-	boardPosXY[0] = x;
-	boardPosXY[1] = y;
-
-	if (checkLittleWin(boardPosXY[0], boardPosXY[1]) != ' ') chooseSpace = true;
-}
-
-int MainBoard::getBoardX()
-{
-	return boardPosXY[0];
-}
-
-int MainBoard::getBoardY()
-{
-	return boardPosXY[1];
-}
-
-bool MainBoard::getChooseSpace()
-{
-	return chooseSpace;
-}
-
-void MainBoard::setChooseSpace(bool cs)
-{
-	chooseSpace = cs;
-}
-
 bool MainBoard::checkForVal(int x, int y)
 {
 	if (miniBoards[boardPosXY[1]][boardPosXY[0]].getVal(x, y) == ' ')
@@ -155,7 +168,6 @@ bool MainBoard::checkForVal(int x, int y)
 	else
 		return true;
 }
-
 void MainBoard::tellBoardPos()
 {
 	//position Y
@@ -175,7 +187,6 @@ void MainBoard::tellBoardPos()
 		cout << " right";
 	cout << " section" << endl;
 }
-
 char MainBoard::checkBigWin()
 {
 	for (int i = 0; i < 3; i++) {
@@ -190,7 +201,6 @@ char MainBoard::checkBigWin()
 
 	return ' ';
 }
-
 char MainBoard::checkLittleWin(int x, int y)
 {
 	return miniBoards[y][x].checkLittleWin();
