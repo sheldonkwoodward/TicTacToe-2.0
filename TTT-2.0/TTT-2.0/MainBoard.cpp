@@ -34,12 +34,15 @@ bool MainBoard::getChooseSpace()
 }
 
 //show board functions
-void MainBoard::showBoard()
+void MainBoard::showBoard(char turn)
 {
 	if (!chooseSpace) setGuessOptions();
 
-	string boardColor = "lightGray", selectedColor = "green";
-	string XWinColor = "darkGray", OWinColor = "darkGray";
+	string boardColor = "lightGray", selectedColor;
+	string XWinColor = "darkAqua", OWinColor = "darkYellow";
+
+	if (turn == 'X') selectedColor = "aqua";
+	else if (turn == 'O') selectedColor = "yellow";
 
 	cout << endl << "                  " << (char)186 << "               " << (char)186 << endl;
 	for (int Y = 0; Y < 3; Y++) {
@@ -51,11 +54,16 @@ void MainBoard::showBoard()
 			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
-			cout << "   " << miniBoards[Y][i].getVal(0, 0);
-			cout << " " << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(1, 0) << " ";
-			cout << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(2, 0) << " ";
+			cout << "   ";
+			///cout << miniBoards[Y][i].getVal(0, 0);
+			showMiniBoardVal(i, Y, 0, 0);
+			cout << " " << (char)179 << " ";
+			///cout << miniBoards[Y][i].getVal(1, 0);
+			showMiniBoardVal(i, Y, 1, 0);
+			cout << " " << (char)179 << " ";
+			///cout << miniBoards[Y][i].getVal(2, 0);
+			showMiniBoardVal(i, Y, 2, 0);
+			cout << " ";
 			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
 		cout << endl;
@@ -85,11 +93,16 @@ void MainBoard::showBoard()
 					else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 					else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
-					cout << "   " << miniBoards[Y][i].getVal(0, 1);
-					cout << " " << (char)179;
-					cout << " " << miniBoards[Y][i].getVal(1, 1);
-					cout << " " << (char)179;
-					cout << " " << miniBoards[Y][i].getVal(2, 1) << " ";
+					cout << "   ";
+					///cout << miniBoards[Y][i].getVal(0, 1);
+					showMiniBoardVal(i, Y, 0, 1);
+					cout << " " << (char)179 << " ";
+					///cout << miniBoards[Y][i].getVal(1, 1);
+					showMiniBoardVal(i, Y, 1, 1);
+					cout << " " << (char)179 << " ";
+					///cout << miniBoards[Y][i].getVal(2, 1);
+					showMiniBoardVal(i, Y, 2, 1);
+					cout << " ";
 					sw::Console::Colors::setConsoleColor(boardColor, "none");
 				}
 				cout << endl;
@@ -103,11 +116,16 @@ void MainBoard::showBoard()
 			else if (miniBoards[Y][i].checkLittleWin() == 'O') sw::Console::Colors::setConsoleColor(OWinColor, "none");
 			else if (boardPosXY[0] == i && boardPosXY[1] == Y) sw::Console::Colors::setConsoleColor(selectedColor, "none");
 
-			cout << "   " << miniBoards[Y][i].getVal(0, 2);
-			cout << " " << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(1, 2);
-			cout << " " << (char)179;
-			cout << " " << miniBoards[Y][i].getVal(2, 2) << " ";
+			cout << "   ";
+			///cout << miniBoards[Y][i].getVal(0, 2);
+			showMiniBoardVal(i, Y, 0, 2);
+			cout << " " << (char)179 << " ";
+			///cout << miniBoards[Y][i].getVal(1, 2);
+			showMiniBoardVal(i, Y, 1, 2);
+			cout << " " << (char)179 << " ";
+			///cout << miniBoards[Y][i].getVal(2, 2);
+			showMiniBoardVal(i, Y, 2, 2);
+			cout << " ";
 			sw::Console::Colors::setConsoleColor(boardColor, "none");
 		}
 
@@ -149,7 +167,28 @@ void MainBoard::removeGuessOptions()
 }
 void MainBoard::showMiniBoardVal(int X, int Y, int x, int y)
 {
+	//miniBoard char
+	char val = miniBoards[Y][X].getVal(x, y);
 
+	//save current text color
+	int color = sw::Console::Colors::getConsoleColor();
+
+	/*HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hstdout, &csbi);*/
+
+	//set new text color
+	if (checkLittleWin(X, Y) != ' ') sw::Console::Colors::setConsoleColor("darkGray", "none");
+	else if (checkLittleWin(X, Y) == val) sw::Console::Colors::setConsoleColor("yellow", "none");
+	else if (val > 47 && val < 58) sw::Console::Colors::setConsoleColor("lightGray", "none");
+	else if (val == 'X') sw::Console::Colors::setConsoleColor("white", "none");
+	else if (val == 'O') sw::Console::Colors::setConsoleColor("white", "none");
+
+	//show val
+	cout << val;
+
+	//revert color
+	sw::Console::Colors::setConsoleColor(color);
 }
 
 //functions

@@ -2,10 +2,22 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void sw::Console::Colors::setConsoleColor(int color)
+{
+	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hstdout, color);
+}
 void sw::Console::Colors::setConsoleColor(string text, string background)
 {
 	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hstdout, getColor(text, 7) + (getColor(background, 0) * 16));
+}
+int sw::Console::Colors::getConsoleColor()
+{
+	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hstdout, &csbi);
+	return csbi.wAttributes;
 }
 int sw::Console::Colors::getColor(string & color, int defaultColor)
 {

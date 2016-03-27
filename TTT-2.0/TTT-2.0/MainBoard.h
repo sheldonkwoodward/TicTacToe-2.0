@@ -21,7 +21,7 @@ public:
 	bool getChooseSpace();
 
 	//show board functions
-	void showBoard();
+	void showBoard(char turn);
 	void setGuessOptions();
 	void removeGuessOptions();
 	void showMiniBoardVal(int X, int Y, int x, int y);
