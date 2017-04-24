@@ -11,6 +11,7 @@ namespace sw {
 		class Colors {
 		public:
 			static void setConsoleColor(int color);
+			static void setConsoleColor(string text);
 			static void setConsoleColor(string text, string background);
 			static int getConsoleColor();
 		private:

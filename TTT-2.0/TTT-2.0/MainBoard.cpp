@@ -41,9 +41,13 @@ void MainBoard::showBoard(char turn)
 	string boardColor = "lightGray", selectedColor;
 	string XWinColor = "darkAqua", OWinColor = "darkYellow";
 
+	if (chooseSpace && turn == 'X') boardColor = "aqua";
+	else if (chooseSpace && turn == 'O') boardColor = "yellow";
+
 	if (turn == 'X') selectedColor = "aqua";
 	else if (turn == 'O') selectedColor = "yellow";
 
+	sw::Console::Colors::setConsoleColor(boardColor);
 	cout << endl << "                  " << (char)186 << "               " << (char)186 << endl;
 	for (int Y = 0; Y < 3; Y++) {
 
@@ -238,7 +242,13 @@ char MainBoard::checkBigWin()
 	if (miniBoards[0][0].checkLittleWin() == miniBoards[1][1].checkLittleWin() && miniBoards[1][1].checkLittleWin() == miniBoards[2][2].checkLittleWin()) return miniBoards[0][0].checkLittleWin();
 	if (miniBoards[0][2].checkLittleWin() == miniBoards[1][1].checkLittleWin() && miniBoards[1][1].checkLittleWin() == miniBoards[2][0].checkLittleWin()) return miniBoards[0][2].checkLittleWin();
 
-	return ' ';
+	for (int Y = 0; Y < 3; Y++) 
+		for (int X = 0; X < 3; X++) 
+			for (int y = 0; y < 3; y++) 
+				for (int x = 0; x < 3; x++) 
+					if (miniBoards[Y][X].getVal(x,y) == ' ') return ' ';
+	
+	return 'C';
 }
 char MainBoard::checkLittleWin(int x, int y)
 {

@@ -7,6 +7,10 @@ void sw::Console::Colors::setConsoleColor(int color)
 	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hstdout, color);
 }
+void sw::Console::Colors::setConsoleColor(string text)
+{
+	setConsoleColor(text, "none");
+}
 void sw::Console::Colors::setConsoleColor(string text, string background)
 {
 	HANDLE hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
